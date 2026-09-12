@@ -1,4 +1,4 @@
-# SSO Debug Lab — OIDC & SAML (Okta)
+# 🔑 SSO Debug Lab — OIDC & SAML (Okta)
 
 [![OIDC client_credentials demo](https://github.com/Anne-LaureS/Okta-SSO-Debug-Lab/actions/workflows/oidc-demo.yml/badge.svg)](https://github.com/Anne-LaureS/Okta-SSO-Debug-Lab/actions/workflows/oidc-demo.yml)
 
@@ -10,7 +10,7 @@ Construit et testé de bout en bout sur un tenant Okta réel (Integrator Free
 Plan), avec une collection [Bruno](https://www.usebruno.com/) qui automatise
 chaque étape de vérification.
 
-## Ce que ça démontre
+## 🎯 Ce que ça démontre
 
 - Compréhension des protocoles **OIDC** (`client_credentials`, JWT, JWKS) et
   **SAML 2.0** (assertions, bindings Redirect/POST, signature XML)
@@ -22,7 +22,7 @@ chaque étape de vérification.
 - Gestion propre des secrets dans une collection partagée (aucune valeur
   réelle committée, voir plus bas)
 
-## Structure du repo
+## 📁 Structure du repo
 
 ```
 procedure-debug-sso.md   Runbook détaillé, étape par étape (OIDC + SAML)
@@ -37,12 +37,12 @@ iam-debug/                Collection Bruno
 Le détail de chaque étape, les commandes PowerShell équivalentes et les
 diagnostics associés sont dans [`procedure-debug-sso.md`](procedure-debug-sso.md).
 
-## Reproduire ce lab
+## 🛠️ Reproduire ce lab
 
 Les étapes de création des apps Okta (OIDC et SAML, sur un tenant Okta
 Developer gratuit) sont détaillées dans [`setup-okta.md`](setup-okta.md).
 
-## Utiliser la collection
+## 🧪 Utiliser la collection
 
 Sans installer d'extension : la collection est exécutable en ligne de
 commande avec le [CLI Bruno](https://www.usebruno.com/) (`npm install -g
@@ -63,7 +63,7 @@ si installée) pour suivre le détail des requêtes :
    test (jamais dans le fichier partagé — voir ci-dessous)
 3. Suivre l'ordre des requêtes dans `oidc/` ou `saml/`
 
-## Preuve de fonctionnement automatisée
+## ✅ Preuve de fonctionnement automatisée
 
 Le flow OIDC `client_credentials` (démo Auth0, voir plus bas) est rejoué à
 chaque push et chaque semaine par [ce workflow
@@ -72,12 +72,12 @@ vérification qu'il s'agit bien d'un JWT valide, non expiré, avec l'audience
 attendue. Le badge en haut de ce README reflète l'état du dernier run — ce
 n'est pas une affirmation, c'est un test qui échoue si le flow casse.
 
-## Secrets
+## 🔐 Secrets
 
 Les fichiers d'environnement ne contiennent que des placeholders. Chaque
 utilisateur renseigne ses propres `client_id` / `client_secret` /
 `saml_response` localement, marqués **Secret** dans Bruno — jamais commités.
 
-## Stack
+## 💻 Stack
 
 Okta (IdP de test) · Auth0 (démo comparative) · Bruno · PowerShell
