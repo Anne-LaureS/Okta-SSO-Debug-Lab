@@ -53,9 +53,9 @@ tu as choisi : c'est cette même valeur qui ira dans `KID=` à l'étape 4.
 3. Nommer l'app (ex: `iam-debug-m2m`) → **Save**
 4. Onglet **General** → noter le **Client ID**
 
-![Création de l'app OIDC — Services d'API](docs/screenshots/01-create-app-oidc.png)
+<img src="docs/screenshots/01-create-app-oidc.png" alt="Création de l'app OIDC — Services d'API" width="800">
 
-![Client ID et authentification par clé publique/privée](docs/screenshots/02-client-id.png)
+<img src="docs/screenshots/02-client-id.png" alt="Client ID et authentification par clé publique/privée" width="800">
 
 ## 3. Configurer l'authentification par clé publique
 
@@ -65,11 +65,11 @@ tu as choisi : c'est cette même valeur qui ira dans `KID=` à l'étape 4.
 3. Section **Public Keys** → **Add Key** → coller le JSON JWK généré à
    l'étape 1 (celui avec `"kid": "iam-debug-lab-key-1"`)
 
-![Clé publique JWK ajoutée, kid visible](docs/screenshots/03-public-key-jwk.png)
+<img src="docs/screenshots/03-public-key-jwk.png" alt="Clé publique JWK ajoutée, kid visible" width="800">
 
 4. Onglet **Okta API Scopes** → **Grant** sur `okta.users.read`
 
-![Scope okta.users.read accordé](docs/screenshots/04-api-scopes.png)
+<img src="docs/screenshots/04-api-scopes.png" alt="Scope okta.users.read accordé" width="800">
 
 ## 4. Obtenir un token
 
@@ -81,7 +81,7 @@ KID=iam-debug-lab-key-1 \
 ./get-token-pkjwt.sh
 ```
 
-![Réponse du script avec un vrai access_token](docs/screenshots/05-token-response.png)
+<img src="docs/screenshots/05-token-response.png" alt="Réponse du script avec un vrai access_token" width="800">
 
 Une réponse avec un `access_token` confirme que le flow `client_credentials`
 via `private_key_jwt` fonctionne — c'est la méthode qui marche sans
@@ -115,9 +115,9 @@ Valider ensuite avec `oidc/discovery.bru` (`bru run oidc/discovery.bru`).
 6. **Next** puis **Finish**
 7. Onglet **Assignments** → **Assign** → assigner ton propre utilisateur Okta
 
-![App SAML Active, utilisateur assigné](docs/screenshots/06-saml-app-assignments.png)
+<img src="docs/screenshots/06-saml-app-assignments.png" alt="App SAML Active, utilisateur assigné" width="800">
 
-![Paramètres SAML complets (ACS, Audience, Name ID, signature)](docs/screenshots/07-saml-configure.png)
+<img src="docs/screenshots/07-saml-configure.png" alt="Paramètres SAML complets (ACS, Audience, Name ID, signature)" width="800">
 
 ## 6. Récupérer les métadonnées SAML
 
@@ -132,7 +132,7 @@ Valider ensuite avec `oidc/discovery.bru` (`bru run oidc/discovery.bru`).
    - `acs_url` = `https://httpbin.org/post`
    - `okta_app_id` = l'`<id>` (préfixe `exk`) relevé à l'étape 2
 
-![URL des métadonnées SAML avec l'App ID (préfixe exk)](docs/screenshots/08-saml-setup-instructions.png)
+<img src="docs/screenshots/08-saml-setup-instructions.png" alt="URL des métadonnées SAML avec l'App ID (préfixe exk)" width="800">
 
 Valider avec `bru run saml/idp-metadata.bru` — la réponse contient le
 certificat de signature X.509 réel de l'IdP.
@@ -148,6 +148,6 @@ certificat de signature X.509 réel de l'IdP.
 4. Coller cette valeur dans la variable `saml_response` de l'environnement
    Bruno (en local uniquement, jamais committée)
 
-![SAML-tracer : POST vers httpbin.org/post capturé, badge SAML](docs/screenshots/09-saml-tracer-capture.png)
+<img src="docs/screenshots/09-saml-tracer-capture.png" alt="SAML-tracer : POST vers httpbin.org/post capturé, badge SAML" width="800">
 
 Valider avec `bru run saml/acs-replay.bru`.
