@@ -110,6 +110,8 @@ Secrets nécessaires côté GitHub Actions (`Settings → Secrets and
 variables → Actions`) : `OKTA_CLIENT_ID` et `OKTA_PRIVATE_KEY` (le contenu
 du fichier `private.pem` généré en local, jamais committé).
 
+![Historique des runs GitHub Actions, tous verts](docs/screenshots/10-github-actions-success.png)
+
 ## 🔐 Secrets
 
 Les fichiers d'environnement ne contiennent que des placeholders. Chaque

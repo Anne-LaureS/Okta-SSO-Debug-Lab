@@ -53,6 +53,10 @@ tu as choisi : c'est cette même valeur qui ira dans `KID=` à l'étape 4.
 3. Nommer l'app (ex: `iam-debug-m2m`) → **Save**
 4. Onglet **General** → noter le **Client ID**
 
+![Création de l'app OIDC — Services d'API](docs/screenshots/01-create-app-oidc.png)
+
+![Client ID et authentification par clé publique/privée](docs/screenshots/02-client-id.png)
+
 ## 3. Configurer l'authentification par clé publique
 
 1. Toujours sur l'app `iam-debug-m2m`, onglet **General** → **Edit** sur
@@ -60,7 +64,12 @@ tu as choisi : c'est cette même valeur qui ira dans `KID=` à l'étape 4.
 2. **Client authentication** → **Public key / Private key**
 3. Section **Public Keys** → **Add Key** → coller le JSON JWK généré à
    l'étape 1 (celui avec `"kid": "iam-debug-lab-key-1"`)
+
+![Clé publique JWK ajoutée, kid visible](docs/screenshots/03-public-key-jwk.png)
+
 4. Onglet **Okta API Scopes** → **Grant** sur `okta.users.read`
+
+![Scope okta.users.read accordé](docs/screenshots/04-api-scopes.png)
 
 ## 4. Obtenir un token
 
@@ -104,6 +113,8 @@ Valider ensuite avec `oidc/discovery.bru` (`bru run oidc/discovery.bru`).
 6. **Next** puis **Finish**
 7. Onglet **Assignments** → **Assign** → assigner ton propre utilisateur Okta
 
+![Paramètres SAML complets (ACS, Audience, Name ID, signature)](docs/screenshots/07-saml-configure.png)
+
 ## 6. Récupérer les métadonnées SAML
 
 1. Sur la page de l'app, onglet **Sign On** → lien **View SAML setup
@@ -116,6 +127,8 @@ Valider ensuite avec `oidc/discovery.bru` (`bru run oidc/discovery.bru`).
 3. Reporter dans `iam-debug/environments/demo.bru` :
    - `acs_url` = `https://httpbin.org/post`
    - `okta_app_id` = l'`<id>` (préfixe `exk`) relevé à l'étape 2
+
+![URL des métadonnées SAML avec l'App ID (préfixe exk)](docs/screenshots/08-saml-setup-instructions.png)
 
 Valider avec `bru run saml/idp-metadata.bru` — la réponse contient le
 certificat de signature X.509 réel de l'IdP.
@@ -130,5 +143,7 @@ certificat de signature X.509 réel de l'IdP.
    copier la valeur du champ `SAMLResponse`
 4. Coller cette valeur dans la variable `saml_response` de l'environnement
    Bruno (en local uniquement, jamais committée)
+
+![SAML-tracer : POST vers httpbin.org/post capturé, badge SAML](docs/screenshots/09-saml-tracer-capture.png)
 
 Valider avec `bru run saml/acs-replay.bru`.
