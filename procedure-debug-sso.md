@@ -53,6 +53,12 @@ Invoke-RestMethod https://votre-org.okta.com/oauth2/default/.well-known/openid-c
 
 ### Étape 1.2 — Un token peut-il être obtenu en direct ?
 
+La méthode dépend du plan Okta de l'organisation.
+
+**Sur un tenant Okta payant** (Workforce/Customer Identity avec le SKU
+M2M activé), le client s'authentifie en `client_secret_basic` contre un
+Authorization Server custom :
+
 ```powershell
 $pair = "$($env:CLIENT_ID):$($env:CLIENT_SECRET)"
 $basic = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($pair))
@@ -68,8 +74,24 @@ Invoke-RestMethod -Method Post `
 
 - **Erreur `unauthorized_client` ou `invalid_scope`** → le client n'a pas la permission/le scope demandé côté IdP. **Corrigez l'enregistrement du client**, puis relancez cette étape.
 - **Erreur `invalid_client`** → `client_id`/`client_secret` faux ou expiré. **Vérifiez le secret**, relancez.
-- **Erreur `invalid_grant` avec "NHI Authentication Tokens SKU is not enabled"** → spécifique aux tenants Okta **Integrator Free Plan** : ce grant est bridé derrière un SKU payant sur un Authorization Server custom. Ce n'est pas un problème de configuration du client — le contournement gratuit et fonctionnel est `private_key_jwt` contre l'Org Authorization Server (`/oauth2/v1/token`), voir `setup-okta.md` et `iam-debug/oidc/.keys-lab/get-token-pkjwt.sh`. Une fois un token obtenu par cette voie, reprenez à 1.3.
+- **Erreur `invalid_grant` avec "NHI Authentication Tokens SKU is not enabled"** → le tenant est en réalité sur un plan **Integrator Free**, pas payant : passez à la méthode gratuite ci-dessous.
 - **Ça répond avec un `access_token`** → l'IdP fonctionne, le problème n'est pas côté serveur d'identité. Passez à 1.3.
+
+**Sur un tenant Okta gratuit** (Integrator Free Plan), ce grant est bridé
+derrière ce même SKU payant sur un Authorization Server custom, quelle
+que soit la configuration du client — inutile de chercher une erreur de
+config. Le contournement gratuit et fonctionnel est `client_credentials`
+via **`private_key_jwt`** contre l'**Org Authorization Server**
+(`/oauth2/v1/token`, et non `/oauth2/default/v1/token`) :
+
+```bash
+OKTA_DOMAIN=votre-org.okta.com CLIENT_ID=... KID=... \
+  iam-debug/oidc/.keys-lab/get-token-pkjwt.sh
+```
+
+Setup complet (génération de la clé, configuration de l'app) dans
+`setup-okta.md`. Une fois un token obtenu par l'une ou l'autre méthode,
+passez à 1.3.
 
 ### Étape 1.3 — Le contenu du token est-il correct ?
 
@@ -217,12 +239,18 @@ Ouvrez `oidc/discovery.bru` → **Send**. Vous devez récupérer le JSON de conf
 
 ### 3.4 — Obtenir un token
 
-Ouvrez `oidc/client-credentials-token.bru` → **Send**. Cette requête est déjà configurée en Basic Auth (`client_id`/`client_secret` dans l'en-tête, pas dans le corps — c'est ce qu'Okta attend par défaut) et son script post-réponse range automatiquement le résultat dans la variable `access_token`.
+**Tenant payant** : ouvrez `oidc/client-credentials-token.bru` → **Send**.
+Cette requête est déjà configurée en Basic Auth (`client_id`/`client_secret`
+dans l'en-tête, pas dans le corps — c'est ce qu'Okta attend par défaut) et
+son script post-réponse range automatiquement le résultat dans la variable
+`access_token`.
 
-Sur un tenant Okta **Integrator Free Plan**, cette requête échoue avec
-`invalid_grant` (voir Étape 1.2 de la procédure) : utilisez plutôt
-`get-token-pkjwt.sh` (documenté dans `setup-okta.md`), qui obtient un vrai
-token via `private_key_jwt` sans dépendre de ce SKU.
+**Tenant gratuit (Integrator Free Plan)** : cette requête échoue avec
+`invalid_grant` (voir Étape 1.2 de la procédure) — c'est attendu, pas une
+erreur de config. `oidc/client-credentials-pkjwt.bru` documente le flow
+`private_key_jwt` équivalent, mais renvoie vers `get-token-pkjwt.sh`
+(documenté dans `setup-okta.md`) pour l'exécution réelle : le bac à sable
+JS de Bruno ne peut pas signer un JWT RS256 nativement.
 
 ### 3.5 — Inspecter le token obtenu
 
