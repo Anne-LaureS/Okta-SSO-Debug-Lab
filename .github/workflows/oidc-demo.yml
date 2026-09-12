@@ -17,11 +17,14 @@ jobs:
         working-directory: iam-debug/oidc/.keys-lab
         run: |
           echo "$OKTA_PRIVATE_KEY" > private.pem
-          CLIENT_ID="$OKTA_CLIENT_ID" bash get-token-pkjwt.sh > /tmp/token-response.json
+          bash get-token-pkjwt.sh > /tmp/token-response.json
           cat /tmp/token-response.json
         env:
+          OKTA_DOMAIN: integrator-5794983.okta.com
           OKTA_CLIENT_ID: ${{ secrets.OKTA_CLIENT_ID }}
           OKTA_PRIVATE_KEY: ${{ secrets.OKTA_PRIVATE_KEY }}
+          KID: iam-debug-lab-key-1
+          CLIENT_ID: ${{ secrets.OKTA_CLIENT_ID }}
 
       - name: Verify the token is real, valid and correctly scoped
         run: |
