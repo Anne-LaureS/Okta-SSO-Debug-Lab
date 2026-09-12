@@ -1,5 +1,15 @@
 # 🔑 SSO Debug Lab — OIDC & SAML (Okta)
 
+<p align="center">
+
+![Okta](https://img.shields.io/badge/Okta-007DC1?style=for-the-badge&logo=okta&logoColor=white)
+![OIDC](https://img.shields.io/badge/OIDC-JWT%2FJWKS-000000?style=for-the-badge)
+![SAML 2.0](https://img.shields.io/badge/SAML-2.0-E44D26?style=for-the-badge)
+![Bruno](https://img.shields.io/badge/Bruno-CLI-F5A623?style=for-the-badge)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)
+
+</p>
+
 [![OIDC private_key_jwt proof (Okta)](https://github.com/Anne-LaureS/Okta-SSO-Debug-Lab/actions/workflows/oidc-demo.yml/badge.svg)](https://github.com/Anne-LaureS/Okta-SSO-Debug-Lab/actions/workflows/oidc-demo.yml)
 
 Boîte à outils pour diagnostiquer un échec de connexion SSO en isolant chaque
