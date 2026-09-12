@@ -3,4 +3,4 @@ node_modules/
 *.log
 .env
 .env.*
-**/.keys-lab/
+**/.keys-lab/*.pem
