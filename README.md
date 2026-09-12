@@ -20,6 +20,17 @@ Construit et testé de bout en bout sur un tenant Okta réel (Integrator Free
 Plan), avec une collection [Bruno](https://www.usebruno.com/) qui automatise
 chaque étape de vérification.
 
+## 🧭 Selon votre situation
+
+- **Vous débuggez un vrai incident SSO en entreprise** (tenant Okta payant,
+  `client_id`/`client_secret` déjà en main) → allez directement dans
+  [`procedure-debug-sso.md`](procedure-debug-sso.md), Partie 1 (OIDC) ou
+  Partie 2 (SAML). Pas besoin de ce lab ni de rien créer.
+- **Vous voulez reproduire le lab depuis zéro** (tenant Okta Developer
+  gratuit, jamais configuré) → suivez [`setup-okta.md`](setup-okta.md) du
+  début à la fin ; il mène à un flow OIDC et un flow SAML fonctionnels
+  sans compte payant ni `client_secret`.
+
 ## 🎯 Ce que ça démontre
 
 - Compréhension des protocoles **OIDC** (`client_credentials`, JWT, JWKS) et
