@@ -7,7 +7,9 @@ Document à suivre pas à pas quand un utilisateur ne peut pas se connecter via 
 - [ ] `pwsh` installé
 - [ ] Extension navigateur **SAML-tracer** installée (Firefox ou Chrome)
 - [ ] Bruno installé (voir Partie 3 ci-dessous si pas encore fait)
-- [ ] Vous avez : le `client_id`/`client_secret` d'une app de test dans votre org Okta
+- [ ] Vous avez : le `client_id` d'une app de test dans votre org Okta, et
+  selon la méthode d'authentification du client (voir Étape 1.2) soit son
+  `client_secret`, soit sa clé privée
 
 ## Étape 0 — Identifier le protocole en cause
 

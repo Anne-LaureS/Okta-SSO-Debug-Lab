@@ -56,17 +56,28 @@ Developer gratuit) sont détaillées dans [`setup-okta.md`](setup-okta.md).
 
 Sans installer d'extension : la collection est exécutable en ligne de
 commande avec le [CLI Bruno](https://www.usebruno.com/) (`npm install -g
-@usebruno/cli`), ce que fait justement la démo automatisée ci-dessous.
+@usebruno/cli`).
 
 ```bash
 cd iam-debug
-bru run auth0-demo --env auth0-demo \
-  --env-var client_id=<ton-client-id> \
-  --env-var client_secret=<ton-client-secret>
+bru run oidc/discovery.bru --env demo \
+  --env-var issuer=https://<ton-tenant>.okta.com
 ```
 
-Elle reste aussi ouvrable dans l'app desktop Bruno (ou son extension VSCode,
-si installée) pour suivre le détail des requêtes :
+Pour le flow `private_key_jwt` (voir `setup-okta.md`), utilisez le script
+dédié plutôt qu'un fichier `.bru` — le bac à sable JS de Bruno ne peut pas
+signer un JWT RS256 nativement :
+
+```bash
+OKTA_DOMAIN=<ton-tenant>.okta.com CLIENT_ID=<ton-client-id> KID=<ton-kid> \
+  ./oidc/.keys-lab/get-token-pkjwt.sh
+```
+
+La démo Auth0 comparative (`auth0-demo/`, voir plus bas) s'utilise de la
+même façon, avec ses propres identifiants Auth0.
+
+La collection reste aussi ouvrable dans l'app desktop Bruno (ou son
+extension VSCode, si installée) pour suivre le détail des requêtes :
 
 1. Ouvrir `iam-debug/` dans Bruno
 2. Sélectionner un environnement, renseigner ses propres identifiants de
