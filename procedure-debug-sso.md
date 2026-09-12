@@ -68,6 +68,7 @@ Invoke-RestMethod -Method Post `
 
 - **Erreur `unauthorized_client` ou `invalid_scope`** → le client n'a pas la permission/le scope demandé côté IdP. **Corrigez l'enregistrement du client**, puis relancez cette étape.
 - **Erreur `invalid_client`** → `client_id`/`client_secret` faux ou expiré. **Vérifiez le secret**, relancez.
+- **Erreur `invalid_grant` avec "NHI Authentication Tokens SKU is not enabled"** → spécifique aux tenants Okta **Integrator Free Plan** : ce grant est bridé derrière un SKU payant sur un Authorization Server custom. Ce n'est pas un problème de configuration du client — le contournement gratuit et fonctionnel est `private_key_jwt` contre l'Org Authorization Server (`/oauth2/v1/token`), voir `setup-okta.md` et `iam-debug/oidc/.keys-lab/get-token-pkjwt.sh`. Une fois un token obtenu par cette voie, reprenez à 1.3.
 - **Ça répond avec un `access_token`** → l'IdP fonctionne, le problème n'est pas côté serveur d'identité. Passez à 1.3.
 
 ### Étape 1.3 — Le contenu du token est-il correct ?
@@ -183,7 +184,14 @@ La collection existe déjà dans `iam-debug/` (dossiers `oidc/`, `saml/`, `envir
 
 ### 3.1 — Ouvrir la collection
 
-Dans l'extension Bruno (icône dans la barre d'activité VSCode) : **Open Collection** → sélectionnez le dossier `SSO-DEBUG/iam-debug`.
+En ligne de commande, avec le [CLI Bruno](https://www.usebruno.com/) (`npm install -g @usebruno/cli`) :
+
+```bash
+cd iam-debug
+bru run oidc/discovery.bru --env uat
+```
+
+Ou dans l'app desktop Bruno (**Open Collection** → dossier `SSO-DEBUG/iam-debug`) si vous préférez l'interface graphique.
 
 ### 3.2 — Choisir et remplir l'environnement
 
@@ -199,7 +207,7 @@ Dans l'extension Bruno (icône dans la barre d'activité VSCode) : **Open Collec
 | `scope` | Le scope custom défini sur le serveur d'autorisation Okta |
 | `acs_url` | L'URL ACS de votre SP (nécessaire uniquement pour la partie SAML) |
 | `saml_response` | À laisser vide, à coller uniquement lors d'un test SAML (Étape 3.7) |
-| `okta_app_id` | L'ID de l'app SAML Okta (console Okta → Applications → votre app → visible dans l'URL), nécessaire uniquement pour l'Étape 3.6 |
+| `okta_app_id` | L'ID de l'app SAML Okta, à récupérer sur l'onglet **Sign On** de l'app → lien **View SAML setup instructions** (pas l'ID visible dans l'URL générale d'administration, qui pointe vers l'instance d'app et non vers l'endpoint SAML) — nécessaire uniquement pour l'Étape 3.6 |
 
 4. Enregistrez
 
@@ -210,6 +218,11 @@ Ouvrez `oidc/discovery.bru` → **Send**. Vous devez récupérer le JSON de conf
 ### 3.4 — Obtenir un token
 
 Ouvrez `oidc/client-credentials-token.bru` → **Send**. Cette requête est déjà configurée en Basic Auth (`client_id`/`client_secret` dans l'en-tête, pas dans le corps — c'est ce qu'Okta attend par défaut) et son script post-réponse range automatiquement le résultat dans la variable `access_token`.
+
+Sur un tenant Okta **Integrator Free Plan**, cette requête échoue avec
+`invalid_grant` (voir Étape 1.2 de la procédure) : utilisez plutôt
+`get-token-pkjwt.sh` (documenté dans `setup-okta.md`), qui obtient un vrai
+token via `private_key_jwt` sans dépendre de ce SKU.
 
 ### 3.5 — Inspecter le token obtenu
 
