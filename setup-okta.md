@@ -81,6 +81,8 @@ KID=iam-debug-lab-key-1 \
 ./get-token-pkjwt.sh
 ```
 
+![Réponse du script avec un vrai access_token](docs/screenshots/05-token-response.png)
+
 Une réponse avec un `access_token` confirme que le flow `client_credentials`
 via `private_key_jwt` fonctionne — c'est la méthode qui marche sans
 dépendre d'un SKU payant, contrairement au grant `client_credentials`

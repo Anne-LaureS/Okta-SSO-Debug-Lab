@@ -13,9 +13,8 @@ intègre au bon endroit avec une légende.
   avec son `kid` visible dans la liste
 - [X] `04-api-scopes.png` — onglet **Okta API Scopes**, `okta.users.read`
   accordé
-- [ ] `05-token-response.png` — terminal après `get-token-pkjwt.sh`, avec
-  un `access_token` reçu (peut être le même type que celui déjà obtenu
-  aujourd'hui)
+- [X] `05-token-response.png` — terminal après `get-token-pkjwt.sh`, avec
+  un `access_token` reçu
 
 ## SAML
 
