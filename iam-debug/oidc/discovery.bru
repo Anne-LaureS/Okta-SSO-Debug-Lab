@@ -1,0 +1,16 @@
+meta {
+  name: discovery
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{issuer}}/.well-known/openid-configuration
+  body: none
+  auth: none
+}
+
+docs {
+  Étape 1.1 de la procédure : confirme que l'IdP répond et récupère
+  authorization_endpoint / token_endpoint / jwks_uri à jour.
+}

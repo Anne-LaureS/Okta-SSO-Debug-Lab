@@ -1,0 +1,38 @@
+meta {
+  name: acs-replay
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{acs_url}}
+  body: formUrlEncoded
+  auth: none
+}
+
+body:form-urlencoded {
+  SAMLResponse: {{saml_response}}
+  RelayState: {{relay_state}}
+}
+
+script:pre-request {
+  // Décode la SAMLResponse (XML base64) avant l'envoi, pour vérifier
+  // localement son contenu (assertion, NameID, conditions) sans dépendre
+  // de la réponse du SP.
+  const xml = Buffer.from(bru.getVar("saml_response"), "base64").toString("utf-8");
+  console.log("SAMLResponse décodée:", xml);
+}
+
+docs {
+  Correspond à la Partie 3.6 de procédure-debug-sso.md : rejoue une
+  SAMLResponse déjà capturée (Étape 2.1) avec SAML-tracer, directement
+  vers l'ACS du SP, sans repasser par tout le flux navigateur.
+
+  Le pre-request script automatise l'Étape 2.2 (décoder le XML) : le
+  payload décodé s'affiche dans la console Bruno avant même l'envoi,
+  utile si le SP rejette la requête sans détail (ex: 302 générique).
+
+  Une fois décodé, vérifiez manuellement l'Étape 2.3 (Destination,
+  Audience, NotBefore/NotOnOrAfter dans le XML affiché) et, si besoin,
+  l'Étape 2.4 via idp-metadata.bru (certificat de signature).
+}

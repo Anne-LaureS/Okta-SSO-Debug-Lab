@@ -1,0 +1,51 @@
+meta {
+  name: get-token
+  type: http
+  seq: 1
+}
+
+post {
+  url: https://{{auth0_domain}}/oauth/token
+  body: json
+  auth: none
+}
+
+headers {
+  content-type: application/json
+}
+
+body:json {
+  {
+    "grant_type": "client_credentials",
+    "client_id": "{{client_id}}",
+    "client_secret": "{{client_secret}}",
+    "audience": "{{audience}}"
+  }
+}
+
+script:post-response {
+  bru.setVar("access_token", res.body.access_token);
+}
+
+tests {
+  test("répond 200", function () {
+    expect(res.getStatus()).to.equal(200);
+  });
+  test("renvoie un access_token", function () {
+    expect(res.body.access_token).to.be.a("string");
+  });
+  test("le token est un JWT (3 segments)", function () {
+    expect(res.body.access_token.split(".").length).to.equal(3);
+  });
+}
+
+docs {
+  Démo de capacité (hors périmètre Okta) : le client_credentials d'Auth0
+  n'est pas bridé derrière un SKU payant, contrairement à l'Integrator
+  Free Plan d'Okta pour un serveur d'autorisation personnalisé.
+
+  Contrairement à Okta, ce endpoint attend un corps JSON
+  (Content-Type: application/json), pas du form-urlencoded — le
+  client_id/secret sont dans le corps (client_secret_post), pas en
+  Basic Auth.
+}

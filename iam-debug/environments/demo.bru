@@ -1,0 +1,15 @@
+vars {
+  issuer: https://integrator-5794983.okta.com/oauth2/default
+  okta_org_url: https://integrator-5794983.okta.com
+  scope: test.read
+  acs_url: https://sp-demo.example.com/saml/acs
+  relay_state: (optionnel)
+  saml_response: à-coller-depuis-saml-tracer
+  okta_app_id: à-remplir-id-app-okta-saml
+  oidc_kid: iam-debug-lab-key-1
+}
+vars:secret [
+  oidc_private_key_pem,
+  client_id,
+  client_secret
+]

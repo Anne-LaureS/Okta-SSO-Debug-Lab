@@ -1,0 +1,36 @@
+meta {
+  name: introspect
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{issuer}}/v1/introspect
+  body: formUrlEncoded
+  auth: basic
+}
+
+auth:basic {
+  username: {{client_id}}
+  password: {{client_secret}}
+}
+
+body:form-urlencoded {
+  token: {{access_token}}
+  token_type_hint: access_token
+}
+
+script:post-response {
+  // Décodage local du payload, en plus de la réponse d'introspection de l'IdP
+  const payload = JSON.parse(
+    Buffer.from(bru.getVar("access_token").split(".")[1], "base64").toString()
+  );
+  console.log("payload décodé:", payload);
+}
+
+docs {
+  Étapes 1.3 / 1.4 de la procédure : vérifie côté IdP que le token
+  ({{access_token}}, posé par client-credentials-token.bru) est toujours
+  actif, et affiche son payload décodé (aud, exp, azp, kid) dans la
+  console Bruno.
+}

@@ -1,0 +1,21 @@
+meta {
+  name: idp-metadata
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{okta_org_url}}/app/{{okta_app_id}}/sso/saml/metadata
+  body: none
+  auth: none
+}
+
+docs {
+  Automatise l'Étape 2.4 de procédure-debug-sso.md (vérifier la
+  signature) : récupère les métadonnées SAML de l'app Okta (certificat
+  de signature, SSO URL, entity ID) sans passer par le téléchargement
+  manuel du certificat via la console Okta.
+
+  Nécessite l'ID de l'app Okta (onglet Sign On de l'app, ou dans l'URL
+  d'admin Okta) dans la variable d'environnement okta_app_id.
+}

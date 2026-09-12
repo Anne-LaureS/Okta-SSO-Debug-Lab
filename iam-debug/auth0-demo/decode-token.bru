@@ -1,0 +1,38 @@
+meta {
+  name: decode-token
+  type: http
+  seq: 2
+}
+
+get {
+  url: https://{{auth0_domain}}/.well-known/openid-configuration
+  body: none
+  auth: none
+}
+
+script:post-response {
+  const payload = JSON.parse(
+    Buffer.from(bru.getVar("access_token").split(".")[1], "base64").toString()
+  );
+  console.log("payload décodé:", payload);
+  bru.setVar("decoded_aud", payload.aud);
+  bru.setVar("decoded_exp", payload.exp);
+}
+
+tests {
+  test("discovery répond 200", function () {
+    expect(res.getStatus()).to.equal(200);
+  });
+  test("l'audience du token correspond à celle demandée", function () {
+    expect(bru.getVar("decoded_aud")).to.equal(bru.getVar("audience"));
+  });
+  test("le token n'est pas expiré", function () {
+    expect(bru.getVar("decoded_exp")).to.be.above(Math.floor(Date.now() / 1000));
+  });
+}
+
+docs {
+  Réutilise l'access_token posé par get-token.bru et affiche son payload
+  décodé (aud, exp, scope) dans la console Bruno, en profitant de l'appel
+  au discovery pour avoir une requête HTTP réelle à envoyer.
+}
