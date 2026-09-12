@@ -1,6 +1,6 @@
 # 🔑 SSO Debug Lab — OIDC & SAML (Okta)
 
-[![OIDC client_credentials demo](https://github.com/Anne-LaureS/Okta-SSO-Debug-Lab/actions/workflows/oidc-demo.yml/badge.svg)](https://github.com/Anne-LaureS/Okta-SSO-Debug-Lab/actions/workflows/oidc-demo.yml)
+[![OIDC private_key_jwt proof (Okta)](https://github.com/Anne-LaureS/Okta-SSO-Debug-Lab/actions/workflows/oidc-demo.yml/badge.svg)](https://github.com/Anne-LaureS/Okta-SSO-Debug-Lab/actions/workflows/oidc-demo.yml)
 
 Boîte à outils pour diagnostiquer un échec de connexion SSO en isolant chaque
 maillon de la chaîne (IdP → token/assertion → application), plutôt qu'en
@@ -65,12 +65,18 @@ si installée) pour suivre le détail des requêtes :
 
 ## ✅ Preuve de fonctionnement automatisée
 
-Le flow OIDC `client_credentials` (démo Auth0, voir plus bas) est rejoué à
-chaque push et chaque semaine par [ce workflow
-GitHub Actions](.github/workflows/oidc-demo.yml) : obtention d'un token,
-vérification qu'il s'agit bien d'un JWT valide, non expiré, avec l'audience
-attendue. Le badge en haut de ce README reflète l'état du dernier run — ce
-n'est pas une affirmation, c'est un test qui échoue si le flow casse.
+Le flow OIDC `client_credentials` via `private_key_jwt` (voir
+`setup-okta.md`) est rejoué à chaque push et chaque semaine, **contre le
+vrai tenant Okta du lab**, par [ce workflow
+GitHub Actions](.github/workflows/oidc-demo.yml) : obtention d'un token
+signé, vérification que c'est un JWT valide, non expiré, avec le bon
+`client_id` (`cid`) et le bon scope (`okta.users.read`). Le badge en haut
+de ce README reflète l'état du dernier run — ce n'est pas une affirmation,
+c'est un test qui échoue si le flow casse.
+
+Secrets nécessaires côté GitHub Actions (`Settings → Secrets and
+variables → Actions`) : `OKTA_CLIENT_ID` et `OKTA_PRIVATE_KEY` (le contenu
+du fichier `private.pem` généré en local, jamais committé).
 
 ## 🔐 Secrets
 
