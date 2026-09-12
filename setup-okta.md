@@ -113,6 +113,8 @@ Valider ensuite avec `oidc/discovery.bru` (`bru run oidc/discovery.bru`).
 6. **Next** puis **Finish**
 7. Onglet **Assignments** → **Assign** → assigner ton propre utilisateur Okta
 
+![App SAML Active, utilisateur assigné](docs/screenshots/06-saml-app-assignments.png)
+
 ![Paramètres SAML complets (ACS, Audience, Name ID, signature)](docs/screenshots/07-saml-configure.png)
 
 ## 6. Récupérer les métadonnées SAML

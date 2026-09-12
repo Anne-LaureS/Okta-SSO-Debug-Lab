@@ -19,10 +19,8 @@ intègre au bon endroit avec une légende.
 
 ## SAML
 
-- [ ] `06-saml-app-assignments.png` — app `iam-debug-saml`, Actif,
-  assignation à Anne-Laure S. — envoyée dans la conversation mais
-  introuvable comme fichier sur le Bureau ; à renvoyer si vous voulez la
-  garder (les 9 autres sont bien enregistrées)
+- [X] `06-saml-app-assignments.png` — app `iam-debug-saml`, Actif,
+  assignation à Anne-Laure S.
 - [X] `07-saml-configure.png` — onglet **Configure SAML**, avec les champs
   Single sign-on URL / Audience URI / Name ID format remplis
 - [X] `08-saml-setup-instructions.png` — page **View SAML setup
