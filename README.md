@@ -20,6 +20,11 @@ Construit et testé de bout en bout sur un tenant Okta réel (Integrator Free
 Plan), avec une collection [Bruno](https://www.usebruno.com/) qui automatise
 chaque étape de vérification.
 
+Couvre l'authentification fédérée moderne (OIDC/SAML) ; pour l'auth **legacy** par bind LDAP
+direct contre l'annuaire (toujours répandue en entreprise à côté du SSO), voir
+[AD-LDAP-Bind-Debug-Lab](https://github.com/Anne-LaureS/AD-LDAP-Bind-Debug-Lab), construit dans
+le même esprit runbook/diagnostic.
+
 ## 🧭 Selon votre situation
 
 - **Vous débuggez un vrai incident SSO en entreprise** (tenant Okta payant,
