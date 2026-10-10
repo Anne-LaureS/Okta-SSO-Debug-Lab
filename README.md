@@ -7,6 +7,7 @@
 ![SAML 2.0](https://img.shields.io/badge/SAML-2.0-E44D26?style=for-the-badge)
 ![Bruno](https://img.shields.io/badge/Bruno-CLI-F5A623?style=for-the-badge)
 ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)
+[![Licence MIT](https://img.shields.io/badge/Licence-MIT-0d1117?style=for-the-badge)](LICENSE)
 
 </p>
 
