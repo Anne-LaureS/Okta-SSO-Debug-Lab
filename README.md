@@ -126,3 +126,10 @@ utilisateur renseigne ses propres `client_id` / `client_secret` /
 ## 💻 Stack
 
 Okta (IdP de test) · Auth0 (démo comparative) · Bruno · PowerShell
+
+---
+
+## 📜 Licence
+
+Publié sous licence [MIT](LICENSE) © 2026 Anne-LaureS : réutilisation libre, à condition de conserver la
+mention de copyright. Fourni « tel quel », sans garantie.
